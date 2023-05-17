@@ -1,0 +1,310 @@
+{% extends 'tickets/base.html' %}
+{% block title %}{{ ticket }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h1 class="t_header">{{ ticket }}</h1>
+    </div>
+    <div class="col-md-3 text-md-right">
+      <h3 class="date_h3">Date: {{ ticket.date }}</h3>
+    </div>
+    <div class="col-md-6">
+      <h5 class="pts_h5">Work complete?: {% if ticket.complete %}Yes{% else %}No{% endif %}</h5>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="info-container col-sm-4">
+      <div class="container">
+        <div class="table-responsive my-5 mb-4">
+          <table class="table table-striped">
+            <tr>
+              <th class="column1">Pay Week</th>
+              <td class="column2">{{ticket.week}}</td>
+            </tr>
+            <tr>
+              <th class="column1">Agreement/Job Number</th>
+              <td class="column2">{{ticket.jobno}}</td>
+            </tr>
+            <tr>
+              <th class="column1">Job/Customer</th>
+              <td class="column2">{{ticket.jobname}}</td>
+            </tr>
+            <tr>
+              <th class="column1">Address</th>
+              <td class="column2">{{ticket.address}}</td>
+            </tr>
+            <tr>
+              <th class="column1">City, State, ZIP</th>
+              <td>{{ticket.city}}, {{ticket.state}} {{ticket.zip}}</td>
+            </tr>
+            <tr>
+              <th class="column1">Day</th>
+                <td>
+                  <select name="day" class="form-select">
+                    {% for day in ticket.DAY %}
+                      <option value="{{ day.0 }}" {% if day.0 == ticket.day %}selected{% endif %} readonly>{{ day.1 }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+
+            <tr>
+              <th class="column1">Hours</th>
+              <td>{{ticket.hours}}</td>
+            </tr>  
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="unit-info-container col-sm-8">
+      <div class="container mb-4 mt-5" style="max-height: 200px; overflow: auto;">
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <th class="column-unit col-1">Unit</th>
+              <th class="column-unit col-1">Mfgr.</th>
+              <th class="column-unit col-3">Model</th>
+              <th class="column-unit col-3">Serial</th>
+              <th class="column-unit col-1">Unit</th>
+              <th class="column-unit col-1">#/Loc.</th>
+            </tr>
+            <tr>
+              <td class="column-unit"><b>1</b></td>
+              <td class="column-unit">{{ticket.man1}}</td>
+              <td class="column-unit">{{ticket.model1}}</td>
+              <td class="column-unit">{{ticket.serial1}}</td>
+              <td class="column-unit">{{ticket.unit1}}</td>
+              <td class="column-unit">{{ticket.loc1}}</td>
+            </tr>
+            <tr>
+              <td class="column-unit"><b>2</b></td>
+              <td class="column-unit">{{ticket.man2}}</td>
+              <td class="column-unit">{{ticket.model2}}</td>
+              <td class="column-unit">{{ticket.serial2}}</td>
+              <td class="column-unit">{{ticket.unit2}}</td>
+              <td class="column-unit">{{ticket.loc2}}</td>
+            </tr>
+            <tr>
+              <td class="column-unit"><b>3</b></td>
+              <td class="column-unit">{{ticket.man3}}</td>
+              <td class="column-unit">{{ticket.model3}}</td>
+              <td class="column-unit">{{ticket.serial3}}</td>
+              <td class="column-unit">{{ticket.unit3}}</td>
+              <td class="column-unit">{{ticket.loc3}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <input type="text" class="desc-text form-control" style="width: 100%" placeholder="Description" value="{{ticket.desc}}" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="reason-info-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="reason rounded p-3">
+              <div class="d-flex justify-content-between">
+                <span class="spn_rsn font-weight-bold align-self-center">Reason(s) for Call:</span>
+                {% load custom_filters %}
+
+                <div class="cb_rsn">
+                  {% with pm_verbose_name="Preventative Maintenance" %}
+                    {% with emer_verbose_name="Emergency" %}
+                      {% with warr_verbose_name="Warranty" %}
+                        {% with start_verbose_name="Start-up" %}
+                          {% with narep_verbose_name="Non-Agreement Repair" %}
+                            {% with inst_verbose_name="Installation" %}
+                              {% with other_verbose_name="Other" %}
+                                {% if ticket.reasons|has_true_value:'pm' %}<p>{{ pm_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'emer' %}<p>{{ emer_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'warr' %}<p>{{ warr_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'start' %}<p>{{ start_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'narep' %}<p>{{ narep_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'inst' %}<p>{{ inst_verbose_name }}</p>{% endif %}
+                                {% if ticket.reasons|has_true_value:'other' %}<p>{{ other_verbose_name }}</p>{% endif %}
+                              {% endwith %}
+                            {% endwith %}
+                          {% endwith %}
+                        {% endwith %}
+                      {% endwith %}
+                    {% endwith %}
+                  {% endwith %}
+                </div>
+                
+
+              
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="reason rounded p-3">
+              <div class="d-flex justify-content-between">
+               <span class="spn_rsn font-weight-bold align-self-center">Equipment:</span>
+                <div class="cb_rsn">
+                 {% if ticket.equipment.all %}
+                   {% for equipment in ticket.equipment.all %}
+                     {% if equipment.recovery %}<p>Recovery Machine</p>{% endif %}
+                     {% if equipment.torch %}<p>Torch</p>{% endif %}
+                     {% if equipment.vacuum %}<p>Vacuum Pump</p>{% endif %}
+                     {% if equipment.power %}<p>Power Washer</p>{% endif %}
+                     {% if equipment.tube %}<p>Tube Cleaner</p>{% endif %}
+                     {% if equipment.rig %}<p>Rigging Equip.</p>{% endif %}
+                     {% if equipment.special %}<p>Special</p>{% endif %}
+                     {% if equipment.other %}<p>Other</p>{% endif %}
+                   {% endfor %}
+                 {% else %}
+                   <p>No equipment found.</p>
+                 {% endif %}
+               </div>
+             </div>
+           </div>
+         </div>
+        </div>
+      </div>
+    </div>
+    <div class="reason-info-container">
+    <div class="equip-info container">
+      <div class="row">
+         
+      </div>
+     </div>
+    </div>
+     <div class="container-fluid">
+  <div class="row">
+    <h3 class="pts_h3">Parts/material:</h3>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="col-sm-1">Qty</th>
+            <th class="col">Description</th>
+            <th class="col">PO</th>
+            <th class="col">Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for material in ticket.material_set.all %}
+          <tr>
+            <td>{{ material.qty }}</td>
+            <td>{{ material.desc }}</td>
+            <td>{{ material.po }}</td>
+            <td>{{ material.stock }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <h3 class="pts_h3 col-sm-3">Refrigerant:</h3>
+  </div>
+
+
+</div>
+<div class="container-fluid col-sm-12 col-md-12 col-lg-12">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Ticket</th>
+        <th>Unit</th>
+        <th>Type</th>
+        <th>Qty</th>
+        <th>Tracking</th>
+        <th>New</th>
+        <th>Recover</th>
+        <th>Recycle</th>
+        <th>Reclaim</th>
+        <th>Reclaim Center</th>
+        <th>PO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for refrigerant in ticket.refrigerant_set.all %}
+      <tr>
+        <td>{{ refrigerant.ticket }}</td>
+        <td>{{ refrigerant.unit }}</td>
+        <td>{{ refrigerant.type }}</td>
+        <td>{{ refrigerant.qty }}</td>
+        <td>{{ refrigerant.tracking }}</td>
+        <td>{{ refrigerant.new }}</td>
+        <td>{{ refrigerant.recover }}</td>
+        <td>{{ refrigerant.recycle }}</td>
+        <td>{{ refrigerant.reclaim }}</td>
+        <td>{{ refrigerant.reclaim_center }}</td>
+        <td>{{ refrigerant.po }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="repto container-fluid">
+  <div class="row">
+    <div class="col-lg-2">
+      <h5>Report to: </h5>
+    </div>
+    <div class="col-lg-3">
+      <input type="text" class="form-control" value="{{ ticket.report_to }}" readonly>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2">
+      <h5>Authorized by: </h5>
+    </div>
+    <div class="col-lg-3">
+      <input type="text" class="form-control" value="{{ ticket.auth_by }}" readonly>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="row">
+        <h3 class="pts_h3 col-sm-3">Customer Signature:</h3>
+      </div>
+      <div class="sig-field row">
+        {% if cust_signature_picture %}
+            <img class="cust-sig" src="data:image/png;base64,{{ cust_signature_picture }}" alt="Customer Signature">
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <h3 class="pts_h3 col-sm-3">Technician Signature:</h3>
+      </div>
+      <div class="sig-field row">
+        {% if tech_signature_picture %}
+          <img src="data:image/png;base64,{{ tech_signature_picture }}" alt="Tech Signature">
+      {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <h3 class="pts_h3 col-sm-3">Comments/notes:</h3>
+  </div>
+  <div class="row">
+    <input type="text" class="cmnts form-control col-sm-6" value="{{ ticket.comments }}" readonly>
+  </div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

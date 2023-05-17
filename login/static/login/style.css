@@ -1,0 +1,120 @@
+body {
+    background-color:lightgray;
+}
+h3 {
+    color:black
+}
+main {
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 4rem;
+    border-radius: 15px;
+    text-align: center;
+    
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    margin: 25px;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.login-form > button, .login-form > input {
+    height: 56px;
+    outline: none;
+    padding: 0 25 0;
+    font-family: inherit;
+    margin-bottom: 10px;
+}
+
+.login-form > button {
+    border: 0;
+    border-radius: 10px;
+    outline-color: transparent;
+    cursor: pointer;
+    width: 100%;
+    height: 56px;
+    background: darkolivegreen;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+}
+
+.login-form > button:hover {
+    background: rgba(85, 107, 47, 0.65)
+}
+
+.login-form > input {
+    transition: all 0.3s;
+    width: 240px;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    text-align: center;
+
+}
+
+.login-form > input:hover, .login-form > input:focus {
+    background-color: lightgray;
+}
+
+input {
+    margin-inline-end: 20px;
+
+}
+
+.title-h3 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 2em;
+    color: #977d08;
+    text-shadow: 1px 1px #fff;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: .25rem;
+    margin-bottom: 300px;
+  }
+  
+@media screen and (max-width: 576px) {
+    .button-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+.grid-con {
+    height: 100vh;
+  }
+  
+.btn1-tickets {
+    max-width:50px;
+    max-height:50px;
+    width: auto;
+    height: auto;
+}
+
+.logo-img {
+    width: 9%;
+    height: 50%;
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.navbar-brand {
+    margin-left: 20px;
+}

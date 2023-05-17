@@ -1,0 +1,35 @@
+{% extends 'tickets/base.html' %}
+
+{% block title %}Tickets{% endblock %}
+{% block content%}
+    {% if user.is_authenticated %}
+    <div style="overflow-x:auto;">
+        <h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Job No.</th>
+                    <th scope="col">Job Name</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <th scope="row">{{ticket.id}}</th>
+                    <td>{{ticket.jobno}}</td>
+                    <td>{{ticket.jobname}}</td>
+                    <td>{{ticket.date}}</td>
+                    <td><a href="{% url 'ticket' ticket.id %}">View</a></td>
+                </tr>
+            {% empty %}
+                <h3>You have no tickets!</h3>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <meta http-equiv="Refresh" content="0; url='/'" />
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'login/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    {% load static %}
+        <h3 class="title-h3">Hello {{ user.username }}.</h3>
+        <div class="grid-con container d-flex justify-content-center align-items-center">
+            <div class="button-grid">
+              <button type="button" class="btn btn-block btn-light rounded-3">
+                <img class="btn1-tickets"src="{% static 'ticket.ico' %}">
+              </button>
+              <button type="button" class="btn btn-block btn-light rounded-3" onclick="location.href='/tickets/';"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+              <button type="button" class="btn btn-block btn-light rounded-3"></button>
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
+          
+          
+    {% else %}
+        <meta http-equiv="Refresh" content="0; url='/login/'" />
+    {% endif %}
+{% endblock %}

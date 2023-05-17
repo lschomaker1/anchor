@@ -1,0 +1,22 @@
+{% extends 'login/base.html' %}
+
+{% block title %}Login{% endblock %}
+{% block content%}
+        {% if user.is_authenticated %}
+        <meta http-equiv="Refresh" content="0; url='/'" />
+        {% else %}
+        <div class="login">
+            <main class="bg-white">
+                <form id="login-form" class="login-form" action="" method='POST'>
+                    {% csrf_token %}
+                    <h3>Login to the Anchor Portal</h3>
+                    
+                    <input type="text" id="username" name="username" placeholder="Username">
+                    <input type="password" id="password" name="password" placeholder="Password">
+                    <button type="submit" id="btnsubmit">Sign In</button>
+                    
+                </form>
+            </main>
+        </div>
+    {% endif %}
+{% endblock %}
