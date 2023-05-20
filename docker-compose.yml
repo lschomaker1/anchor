@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=TRUE
+      - MYSQL_DATABASE=anchor-mysqldb
+      - MYSQL_USER=lucas
+      - MYSQL_PASSWORD=VANadium123!@#
+    volumes:
+      - ./my.cnf:/etc/mysql/my.cnf

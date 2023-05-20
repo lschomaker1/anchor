@@ -131,3 +131,26 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+function submitForms() {
+  var materialForm = document.getElementById('material-form');
+  var refrigerantForm = document.getElementById('refrigerant-form');
+  
+  // Remove the deletion checkboxes before submitting the forms
+  removeDeletionCheckboxes(materialForm);
+  removeDeletionCheckboxes(refrigerantForm);
+  
+  // Submit the material form
+  materialForm.submit();
+  
+  // Submit the refrigerant form
+  refrigerantForm.submit();
+}
+
+// Remove the deletion checkboxes before submitting the form
+function removeDeletionCheckboxes(form) {
+  var checkboxes = form.querySelectorAll('input[name$="-delete"]');
+  checkboxes.forEach(function (checkbox) {
+    checkbox.parentNode.removeChild(checkbox);
+  });
+}

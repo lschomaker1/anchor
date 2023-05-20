@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'anchor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'anchor',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'PASSWORD': 'VANadium123!@#',
         'OPTIONS': {
-            'unix_socket': '/opt/lampp/var/mysql/mysql.sock',
+            'unix_socket': '/run/mysqld/mysqld.sock',
         },
-        'PORT': '3306'
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

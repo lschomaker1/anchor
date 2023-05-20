@@ -1,0 +1,6 @@
+
+Django==4.2.1
+django-jsignature==0.11
+mysqlclient==2.1.1
+
+

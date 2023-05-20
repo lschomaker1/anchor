@@ -67,21 +67,43 @@ def image_to_base64(image):
     return image_base64
 
 def create_ticket(request):
-    
+    MaterialFormSet = formset_factory(MaterialForm, extra=1, can_delete=True)
+    RefrigerantFormSet = formset_factory(RefrigerantForm, extra=1, can_delete=True)
+
     if request.method == 'POST':
         ticket_form = TicketForm(request.POST)
         reasons_form = ReasonsForm(request.POST)
         equipment_form = EquipmentForm(request.POST)
-        
+        material_formset = MaterialFormSet(request.POST, prefix='material')
+        refrigerant_formset = RefrigerantFormSet(request.POST, prefix='refrigerant')
         if (ticket_form.is_valid() and
             reasons_form.is_valid() and
-            equipment_form.is_valid()
+            equipment_form.is_valid() and
+            material_formset.is_valid() and
+            refrigerant_formset.is_valid()
             ):
             ticket = ticket_form.save(commit=False)  # Create a new Ticket instance without saving it
             reasons = reasons_form.save(commit=False)
             equipment = equipment_form.save(commit=False)
             cust_signature = ticket_form.cleaned_data.get('cust_signature')
             tech_signature = ticket_form.cleaned_data.get('tech_signature')
+
+            material_instances = material_formset.save(commit=False)
+            for material in material_instances:
+                # Process each material instance
+                
+                # Set the ticket reference
+                material.ticket = ticket
+                material.save()
+            
+            refrigerant_instances = refrigerant_formset.save(commit=False)
+            for refrigerant in refrigerant_instances:
+                # Process each refrigerant instance
+                
+                # Set the ticket reference
+                refrigerant.ticket = ticket
+                refrigerant.save()
+
 
             if cust_signature:
                 cust_signature_picture = draw_signature(cust_signature)
@@ -118,6 +140,8 @@ def create_ticket(request):
         ticket_form = TicketForm()
         reasons_form = ReasonsForm()
         equipment_form = EquipmentForm()
+        material_formset = MaterialFormSet(prefix='material')
+        refrigerant_formset = RefrigerantFormSet(prefix='refrigerant')
 
 
     context = {
@@ -126,6 +150,8 @@ def create_ticket(request):
         'equipment_form': equipment_form,
         'tech_signature_picture': request.session.get('tech_signature_picture'),
         'cust_signature_picture': request.session.get('cust_signature_picture'),
+        'material_formset': material_formset,
+        'refrigerant_formset': refrigerant_formset,
     }
 
     return render(request, 'tickets/create_ticket.html', context)
