@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from login import views as lviews
+from . import settings
 
 
 urlpatterns = [
@@ -26,5 +28,8 @@ urlpatterns = [
     path('signout/', lviews.signout, name="signout"),
     path('tickets/', include('tickets.urls'), name='tickets'),
 
-
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

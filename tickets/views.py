@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, UpdateView
 from jsignature.utils import draw_signature
 from django.utils import timezone
 from .models import Ticket, Equipment, Material, Refrigerant, Image
-from .forms import ReasonsForm, TicketForm, EquipmentForm, MaterialForm, RefrigerantForm, ImageUploadForm
+from .forms import ReasonsForm, TicketForm, EquipmentForm, MaterialForm, RefrigerantForm, ImageForm
 from io import BytesIO
 from PIL import Image
 import base64
@@ -34,7 +34,7 @@ class TicketDetail(DetailView):
 
         if reasons:
             context['reasons'] = reasons
-            
+        
 
         field_names = ['pm', 'emer', 'warr', 'start', 'narep', 'inst', 'other']
         initial_data = {
@@ -72,7 +72,7 @@ def create_ticket(request):
         ticket_form = TicketForm(request.POST)
         reasons_form = ReasonsForm(request.POST)
         equipment_form = EquipmentForm(request.POST)
-        image_form = ImageUploadForm(request.POST, request.FILES)
+        image_form = ImageForm(request.POST, request.FILES)
         if (ticket_form.is_valid() and
             reasons_form.is_valid() and
             equipment_form.is_valid() and
@@ -82,10 +82,6 @@ def create_ticket(request):
             reasons = reasons_form.save(commit=False)
             equipment = equipment_form.save(commit=False)
 
-            images = request.FILES.getlist('images')
-            for image in images:
-                image_model = Image(ticket=ticket, image=image)
-                image_model.save()
             cust_signature = ticket_form.cleaned_data.get('cust_signature')
             tech_signature = ticket_form.cleaned_data.get('tech_signature')
 
@@ -114,7 +110,7 @@ def create_ticket(request):
             reasons.other = reasons_form.cleaned_data['other']
 
             ticket.save()
-            
+            image_form.save_images(ticket)
             reasons_form.save()
             equipment.save()
 
@@ -124,7 +120,7 @@ def create_ticket(request):
         ticket_form = TicketForm()
         reasons_form = ReasonsForm()
         equipment_form = EquipmentForm()
-        image_form = ImageUploadForm()
+        image_form = ImageForm()
 
 
     context = {

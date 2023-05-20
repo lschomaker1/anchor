@@ -210,9 +210,6 @@
   <div class="row">
     <h3 class="pts_h3 col-sm-3">Refrigerant:</h3>
   </div>
-
-
-</div>
 <div class="container-fluid col-sm-12 col-md-12 col-lg-12">
   <table class="table table-striped">
     <thead>
@@ -300,7 +297,38 @@
   <div class="row">
     <input type="text" class="cmnts form-control col-sm-6" value="{{ ticket.comments }}" readonly>
   </div>
+  <div class="row">
+    <h3 class="pts_h3 col-sm-3">Images:</h3>
+  </div>
+  <div class="row">
+    <div id="image-carousel" class="carousel slide" data-bs-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        {% for image in ticket.image_set.all %}
+          <li data-bs-target="#image-carousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active "{% endif %}></li>
+        {% endfor %}
+      </ol>
+      <!-- Slides -->
+      <div class="carousel-inner">
+        {% for image in ticket.image_set.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ image.image.url }}" alt="No Images Provided" class="img-thumbnail mx-auto d-block">
+          </div>
+        {% endfor %}
+      </div>
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#image-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
 </div>
+
 </div>
 <br>
 <br>
