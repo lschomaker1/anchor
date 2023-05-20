@@ -65,6 +65,10 @@ class Ticket(models.Model):
     def __str__(self):
         return f"Ticket #{self.pk}"
     
+class Image(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
+
 class Reasons(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, default=1, related_name='reasons')
     pm = models.BooleanField(verbose_name='Preventative Maintenance', default=False, null=True, blank=True)

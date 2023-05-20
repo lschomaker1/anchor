@@ -1,6 +1,7 @@
 from django import forms
 from .models import Ticket, Reasons, Equipment, Refrigerant, Material
 from jsignature.widgets import JSignatureWidget
+from multiupload.fields import MultiFileField
 
 class ReasonsForm(forms.ModelForm):
 
@@ -50,6 +51,11 @@ class RefrigerantForm(forms.ModelForm):
             'po'
         ]
         exclude = ['delete']
+
+class ImageUploadForm(forms.Form):
+    images = MultiFileField(min_num=0, max_num=10)
+
+
 
 class EquipmentForm(forms.ModelForm):
 

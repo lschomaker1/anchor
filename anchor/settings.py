@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'login.apps.LoginConfig',
     'tickets',
     'jsignature',
+    'multiupload',
 ]
 
 MIDDLEWARE = [
